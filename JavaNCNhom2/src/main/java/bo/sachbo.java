@@ -12,6 +12,13 @@ public class sachbo {
 		ds=sdao.getsach();
 		return ds;
 	}
+	public ArrayList<sachbean> getsach(int page, int pageSize, String searchValue, String ml) throws Exception{
+		ds=sdao.getsach(page, pageSize, searchValue, ml);
+		return ds;
+	}
+	public int count(String searchValue, String ml) throws Exception{
+		return sdao.count(searchValue, ml);
+	}
 	public ArrayList<sachbean> TimMa(String maloai) throws Exception{		
 		ArrayList<sachbean> tam= new ArrayList<sachbean>();
 		for(sachbean s: ds) {

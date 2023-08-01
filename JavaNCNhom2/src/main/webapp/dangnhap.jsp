@@ -1,74 +1,133 @@
+<%@page import="bean.khachhangbean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.chitietgiohangbean"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Đăng nhập</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">    
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="tc.jsp">Trang chủ</a></li>      
-     <!--  <li><a href="#">Giỏ hàng</a></li>
-      <li><a href="#">Thanh toán</a></li>
-      <li><a href="#">Lịch sử mua hàng</a></li> -->
-    </ul>
-    <%if(session.getAttribute("un")==null) {%>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="dangky.jsp"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li>
-      <li><a href="dangnhap.jsp"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
-    </ul>
-    <%}else{%>
-    	<ul class="nav navbar-nav navbar-right">
-    	 <li><a href="#">Xin chào: <%=session.getAttribute("un")%></a></li>
-    	
-    <li><a href="dangxuat.jsp"></span> Đăng xuất</a></li>
-    
-  </ul>
-    <%}%>
-  </div>
- 
-</nav>
+	<nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Nhà sách AK</a>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="sach">Trang
+							chủ</a></li>
+					<%
+					List<chitietgiohangbean> g = new ArrayList<chitietgiohangbean>();
+					//Neu mua hang lan dau
+					if (session.getAttribute("gh") != null) {
+						//Gian session: gh vao bien: g
+						g = (List<chitietgiohangbean>) session.getAttribute("gh");
+					}
+					%>
+					<li class="nav-item"><a class="nav-link" href="gio">Giỏ
+							hàng(<%=g.size()%>)
+							<li class="nav-item"><a class="nav-link" href="luu">Xác
+									nhận đặt mua</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="lichsumuahang">Lịch sử mua hàng</a></li>
+				</ul>
+				<%
+				khachhangbean kh = (khachhangbean) session.getAttribute("un");
+				if (kh == null) {
+				%>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="dangky"><span
+							class="bi bi-person"></span> Đăng ký</a></li>
+					<li class="nav-item active"><a class="nav-link"
+						href="dangnhap"><span class="bi bi-person"></span> Đăng nhập</a></li>
+				</ul>
+				<%
+				} else {
+				%>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Xin
+							chào: <%=kh.getHoten()%></a></li>
+					<li class="nav-item"><a class="nav-link" href="dangxuat"></span>
+							Đăng xuất</a></li>
+				</ul>
+				<%
+				}
+				%>
+			</div>
+		</div>
+	</nav>
+	<%
+	String tk = "", loi = "";
+	if (request.getAttribute("tk") != null) {
+		tk = (String) request.getAttribute("tk");
+	}
+	if (request.getAttribute("loi") != null) {
+		loi = (String) request.getAttribute("loi");
+	}
 
- <% 
-  
-			String tk = request.getParameter("txtun");
-			String mk = request.getParameter("txtpass");
-			String loi = "";			
-		    if(tk != null && mk!= null) {
-		    	if(tk.equals("abc") && mk.equals("123")){
-		    		session.setAttribute("un", tk);			    		
-		    		response.sendRedirect("htsach.jsp");		    		
-		    	}
-		    	else{	
-		    		loi="Thông tin đăng nhập của bạn không hợp lệ!";
-		    	}
-		    }		
-		    if(session.getAttribute("un")==null){
-		    %><form class="husc-form-login" method="post" action="dangnhap.jsp" style="width: 35%">				
-				<h2 style="color: blue">SINH VIÊN</h2>
-				<div style="margin-bottom: 10px;">
-					<label><b>Mã sinh viên:</label> 
-					<%if(tk!=null) {%>
-						<input type="text" name="txtun" class="form-control input-lg" placeholder="Mã sinh viên" value="<%=tk%> "required>
-					<%}
-					else {%>						
-							<input type="text" name="txtun" class="form-control input-lg" placeholder="Mã sinh viên" required>
-					<%} %> 
+	if (session.getAttribute("un") == null) {
+	%>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="text-center">Đăng nhập</h3>
+					</div>
+					<div class="card-body">
+						<form method="post" action="dangnhap">
+							<div class="form-group">
+								<label for="username">Tài khoản:</label>
+								<%
+								if (tk != "") {
+								%>
+								<input name="txtun" type="text" class="form-control"
+									id="username" placeholder="Nhập tài khoản" value="<%=tk%>"
+									required>
+								<%
+								} else {
+								%><input name="txtun" type="text" class="form-control"
+									id="username" placeholder="Nhập tài khoản" required>
+								<%
+								}
+								%>
+							</div>
+							<div class="form-group">
+								<label for="password">Mật khẩu:</label> <input name="txtpass" type="password"
+									class="form-control" id="password" placeholder="Nhập mật khẩu">
+							</div>
+							<%
+							if (loi != "")
+							%>
+							<span style="color: red"><%=loi%></span>
+							<button type="submit" class="btn btn-primary btn-block">Đăng
+								nhập</button>
+						</form>
+					</div>
 				</div>
-				<div style="margin-bottom: 10px;">
-					<label><b>Mật khẩu:</label> <input type="password" name="txtpass"
-						class="form-control input-lg" placeholder="Mật khẩu" required>
-				</div>	
-				<%if(loi!="") %> <span style="color: red"><%=loi %></span>			
-				<input type="submit" class="btn" name="but" value="Đăng nhập">
-				
-			</form>
-			<%} %>
+			</div>
+		</div>
+	</div>
+	<%
+	}
+	%>
 </body>
 </html>

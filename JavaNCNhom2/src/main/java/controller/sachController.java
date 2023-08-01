@@ -80,7 +80,7 @@ public class sachController extends HttpServlet {
 			 * if (ml != null) { dssach = sbo.TimMa(ml); } else if (key != null) { dssach =
 			 * sbo.Tim(key); session.setAttribute("key", key); }
 			 */
-			session.setAttribute("dssach", dssach);
+			request.setAttribute("dssach", dssach);
 			RequestDispatcher rd = request.getRequestDispatcher("htsach.jsp");
 			rd.forward(request, response);
 		} catch (Exception e) {

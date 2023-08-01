@@ -24,13 +24,11 @@
 <body style="background-color: #f0f0f0;">
 	<nav class="navbar navbar-dark bg-dark navbar-expand-sm">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Nhà sách AK</a>
-				<button type="button" class="navbar-toggler" data-toggle="collapse"
-					data-target="#myNavbar" style="margin-left: 150px">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-			</div>
+			<a class="navbar-brand" href="#">Nhà sách AK</a>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="sach">Trang
