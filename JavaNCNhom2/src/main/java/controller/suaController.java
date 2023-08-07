@@ -46,6 +46,7 @@ public class suaController extends HttpServlet {
 			if (sl != null) {
 				g.CapNhatSL(ms, Integer.parseInt(sl));
 				session.setAttribute("gh", g.ds);
+				session.setAttribute("tongtien", g.Tongtien());
 			}
 			response.sendRedirect("gio");
 		} catch (Exception e) {

@@ -1,21 +1,16 @@
 package dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.naming.java.javaURLContextFactory;
-
-import bean.chitietgiohangbean;
+import bean.adminxacnhanbean;
 import bean.chitiethoadonbean;
 import bean.hoadonbean;
 import bean.lichsumuabean;
-import bean.loaibean;
-
-import java.security.AlgorithmParametersSpi;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class hoadondao {
 	public int taohd(long makh, Date ngayMua) throws Exception {
@@ -49,10 +44,21 @@ public class hoadondao {
 		cmd.setLong(2, SoLuongMua);
 		cmd.setLong(3, MaHoaDon);
 		cmd.setBoolean(4, false);
+		cs.cn.close();
 		// b3: Thuc hien cau lenh
 		return cmd.executeUpdate();
 	}
-
+	public int SuaCTHD(long mact) throws Exception {
+		// B1: tao cau lenh sql
+		ketnoidao cs = new ketnoidao();
+		cs.KetNoi();
+		String sql = "update ChiTietHoaDon set damua = 1 where MaChiTietHD = ?";
+		// B2: Tao ra cau lenh: Preparestatement de thuc thi cau lenh sql
+		PreparedStatement cmd = cs.cn.prepareStatement(sql);
+		cmd.setLong(1, mact);
+		// b3: Thuc hien cau lenh
+		return cmd.executeUpdate();
+	}
 	public List<hoadonbean> GetHD(long makh, boolean damua) throws Exception {
 		List<hoadonbean> ds = new ArrayList<hoadonbean>();
 		ketnoidao cs = new ketnoidao();
@@ -86,7 +92,6 @@ public class hoadondao {
 			long MaChiTietHD = rs.getLong("MaChiTietHD");
 			String MaSach = rs.getString("MaSach");
 			long SoLuongMua = rs.getLong("SoLuongMua");
-
 			Boolean damua = rs.getBoolean("damua");
 			ds.add(new chitiethoadonbean(MaChiTietHD, MaSach, SoLuongMua, mahoadon, damua));
 		}
@@ -94,7 +99,28 @@ public class hoadondao {
 		rs.close();
 		return ds;
 	}
-
+	public ArrayList<adminxacnhanbean> getxacnhan() throws Exception{
+		ArrayList<adminxacnhanbean> ds = new ArrayList<adminxacnhanbean>();
+		ketnoidao cs = new ketnoidao();
+		cs.KetNoi();
+		String sql = "select * from VadminXacNhan";
+		PreparedStatement cmd = cs.cn.prepareStatement(sql);
+		// b3: Thuc hien cau lenh
+		ResultSet rs = cmd.executeQuery();
+		while (rs.next()) {
+			long MaChiTietHD = rs.getLong("MaChiTietHD");
+			String hoten = rs.getString("hoten");
+			String tensach = rs.getString("tensach");
+			Long gia = rs.getLong("gia");
+			long SoLuongMua = rs.getLong("SoLuongMua");
+			long thanhtien = rs.getLong("thanhtien");
+			Boolean damua = rs.getBoolean("damua");
+			ds.add(new adminxacnhanbean(MaChiTietHD, hoten, tensach, gia, SoLuongMua, thanhtien, damua));
+		}
+		cs.cn.close();
+		rs.close();
+		return ds;
+	}
 	public List<lichsumuabean> GetLSmua(long makh, int damua) throws Exception {
 		List<lichsumuabean> ds = new ArrayList<lichsumuabean>();
 		ketnoidao cs = new ketnoidao();

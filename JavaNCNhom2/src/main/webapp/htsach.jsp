@@ -96,7 +96,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="dropdown d-block d-md-none m-2">
+	<div class="dropdown d-block d-sm-none m-2">
 		<button type="button" class="btn btn-primary dropdown-toggle"
 			data-toggle="dropdown" style="width: 100%">Thể loại</button>
 		<div class="dropdown-menu" style="column-count: 2; width: 100%">
@@ -111,7 +111,7 @@
 			%>
 		</div>
 	</div>
-	<div class="d-none d-md-block">
+	<div class="d-none d-sm-block">
 		<div class="row">
 			<div class="col-3 dropdown d-flex d-lg-none m-2">
 				<button type="button" class="btn btn-primary dropdown-toggle"

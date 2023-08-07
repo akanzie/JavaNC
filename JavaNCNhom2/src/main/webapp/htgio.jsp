@@ -132,8 +132,7 @@
 					class="btn btn-danger" type="submit" value="Xóa" formaction="xoa">
 			</div>
 			<div class="col-md-6 text-right" style="background-color: white">
-				<b>Tổng tiền: <%=tongtien%></b> <input class="btn btn-success"
-					type="submit" formaction="luu" value="Xác nhận đặt mua">
+				<b>Tổng tiền: <%=tongtien%></b> <a href="luu" class="btn btn-success">Xác nhận đặt mua</a>
 			</div>
 		</div>
 	</form>

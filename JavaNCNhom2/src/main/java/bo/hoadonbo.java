@@ -2,8 +2,10 @@ package bo;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import bean.adminxacnhanbean;
 import bean.chitietgiohangbean;
 import bean.chitiethoadonbean;
 import bean.hoadonbean;
@@ -31,5 +33,11 @@ public class hoadonbo {
 	}
 	public List<lichsumuabean> getLSmua(long makh, int damua) throws Exception{
 		return hddao.GetLSmua(makh, damua);
+	}
+	public int SuaCTHD(long mact) throws Exception {
+		return hddao.SuaCTHD(mact);
+	}
+	public ArrayList<adminxacnhanbean> getxacnhan() throws Exception {
+		return hddao.getxacnhan();
 	}
 }

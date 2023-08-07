@@ -67,7 +67,7 @@ public class xoaController extends HttpServlet {
 						session.removeAttribute("gh");
 						session.removeAttribute("tongtien");
 					} else
-						session.setAttribute("gh", ghbo);
+						session.setAttribute("gh", ghbo.ds);
 				}
 			}
 			response.sendRedirect("gio");
